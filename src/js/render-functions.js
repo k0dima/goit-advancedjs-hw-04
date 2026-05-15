@@ -1,13 +1,13 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import refs from './refs';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-let lightbox = new SimpleLightbox('.gallery a', {
+const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-
-const galleryList = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
 
 export const createGallery = images => {
   const galleryMarkup = images
@@ -40,18 +40,61 @@ export const createGallery = images => {
     )
     .join('');
 
-  galleryList.innerHTML = galleryMarkup;
+  refs.galleryList.insertAdjacentHTML('beforeend', galleryMarkup);
   lightbox.refresh();
 };
 
 export const clearGallery = () => {
-  galleryList.innerHTML = '';
+  refs.galleryList.innerHTML = '';
 };
 
 export const showLoader = () => {
-  loader.classList.add('is-visible');
+  refs.loader.classList.add('is-visible');
 };
 
 export const hideLoader = () => {
-  loader.classList.remove('is-visible');
+  refs.loader.classList.remove('is-visible');
+};
+
+export const showLoadMoreBtn = () => {
+  if (refs.loadMoreBtn.classList.contains('is-visible')) {
+    return;
+  }
+
+  refs.loadMoreBtn.classList.add('is-visible');
+};
+
+export const hideLoadMoreBtn = () => {
+  if (!refs.loadMoreBtn.classList.contains('is-visible')) {
+    return;
+  }
+  refs.loadMoreBtn.classList.remove('is-visible');
+};
+
+const defaultToastOptions = {
+  position: 'topRight',
+  maxWidth: 432,
+};
+
+export const showErrorToast = message => {
+  iziToast.error({
+    ...defaultToastOptions,
+    message,
+    backgroundColor: '#ef4040',
+    messageColor: '#fafafb',
+    iconColor: '#fafafb',
+    progressBarColor: '#b51b1b',
+  });
+};
+
+export const showWarningToast = message => {
+  iziToast.warning({
+    ...defaultToastOptions,
+    message,
+    title: 'Warning',
+    backgroundColor: '#aedbf9ff',
+    messageColor: '#242424',
+    iconColor: '#242424',
+    progressBarColor: '#242424',
+  });
 };

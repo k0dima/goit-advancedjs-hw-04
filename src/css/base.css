@@ -63,7 +63,7 @@ input[type="text"]:focus {
   border-color: #4E75FF;
 }
 
-button[type="submit"] {
+.button {
   height: 40px;
   background: #4E75FF;
   gap: 10px;
@@ -195,4 +195,13 @@ button[type="submit"]:hover {
 .info-value {
   font-size: 12px;
   margin: 0;
+}
+
+button[data-action="load-more"] {
+  visibility: hidden;
+  margin-top: 32px;
+}
+
+button[data-action="load-more"].is-visible {
+  visibility: visible;
 }
